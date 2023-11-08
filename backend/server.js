@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const cors = require('cors');
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
@@ -19,6 +20,7 @@ const db = mongoose.connection;
 db.on('error', error => console.error(error));
 db.once('open', () => console.log(`Connected to database ${db.host}`));
 
+app.use(cors());
 // Parse JSON request bodies
 app.use(express.json());
 
@@ -55,7 +57,7 @@ app.get('/exchanges/:exchangeName/currency-pairs', async (req, res) => {
 });
 
 // @desc   	Get latest single currency pair in all exchanges
-// @route   GET /currency-pairs/currency-pair
+// @route   GET /currency-pairs/:currency-pair
 // @access 	Public
 app.get('/currency-pairs/:currencyPair', async (req, res) => {
 	try {
@@ -76,6 +78,38 @@ app.get('/currency-pairs/:currencyPair', async (req, res) => {
 		res.status(200).json({ success: true, data: currencyPair });
 	} catch (error) {
 		res.status(500).json({ error: 'Server error' });
+	}
+});
+
+// @desc   	Get average price of single currency pair
+// @route   GET /currency-pairs/average/:currencyPair //final
+// @route   GET /exchanges/avg/:exchangeName/currency-pairs //temp
+// @access 	Public
+app.get('/exchanges/avg/:exchangeName/currency-pairs', async (req, res) => {
+	try {
+		const exchange = await Exchange.findOne({
+			name: req.params.exchangeName,
+		});
+
+		if (!exchange) {
+			return res
+				.status(404)
+				.json({ success: false, error: 'Exchange not found' });
+		}
+
+		const currencyPairs = await CurrencyPair.aggregate([
+			{ $match: { exchange: exchange._id } },
+			{
+				$project: {
+					currencyPair: 1,
+					price: { $arrayElemAt: ['$priceHistory', -1] },
+				},
+			},
+		]);
+
+		res.status(200).json({ success: true, data: currencyPairs });
+	} catch (error) {
+		res.status(500).json({ error: 'Server error', details: error.message });
 	}
 });
 
@@ -297,4 +331,4 @@ app.use((err, req, res, next) => {
 	res.status(500).send('Something broke!');
 });
 
-app.listen(3000, () => console.log('Example app is listening on port 3000.'));
+app.listen(8080, () => console.log('Example app is listening on port 8080.'));
