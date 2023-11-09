@@ -11,7 +11,7 @@ function Home() {
   );
 
   useEffect(() => {
-    fetch('/exchanges/avg/Bahmani/currency-pairs')
+    fetch('/exchanges/avg/currencypairs')
       .then(res => res.json())
       .then(data => setAvgPriceList(data.data))
       .catch(error => console.log(error));

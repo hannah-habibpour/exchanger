@@ -93,13 +93,13 @@ app.get('/currency-pairs/:currencyPair', async (req, res) => {
 });
 
 // @desc   	Get average price of single currency pair
-// @route   GET /currency-pairs/average/:currencyPair //final
+// @route   GET /exchanges/avg/currencypairs //final
 // @route   GET /exchanges/avg/:exchangeName/currency-pairs //temp
 // @access 	Public
-app.get('/exchanges/avg/:exchangeName/currency-pairs', async (req, res) => {
+app.get('/exchanges/avg/currencypairs', async (req, res) => {
   try {
     const exchange = await Exchange.findOne({
-      name: req.params.exchangeName,
+      name: 'Bahmani',
     });
 
     if (!exchange) {
