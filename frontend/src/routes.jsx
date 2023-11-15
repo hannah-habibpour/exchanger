@@ -1,15 +1,15 @@
 import { createBrowserRouter } from 'react-router-dom';
-import Home from './pages/Home';
-import ExchangeProfile from './pages/ExchangeProfile';
+import HomePage from './pages/HomePage';
+import ExchangeProfilePage from './pages/ExchangeProfilePage';
 
 const Router = createBrowserRouter([
   {
     path: '/',
-    element: <Home />,
+    element: <HomePage />,
   },
   {
-    path: '/profile',
-    element: <ExchangeProfile />,
+    path: '/profile/:exchangeName',
+    element: <ExchangeProfilePage />,
   },
 ]);
 

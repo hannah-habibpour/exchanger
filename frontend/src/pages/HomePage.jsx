@@ -1,6 +1,6 @@
 import AvgCurrencyPrices from '../components/AvgCurrencyPrices';
 import SelectedCurrencyPrice from '../components/SelectedCurrencyPrice';
-function Home() {
+function HomePage() {
   return (
     <div>
       <AvgCurrencyPrices />
@@ -9,4 +9,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default HomePage;
