@@ -41,13 +41,15 @@ app.get('/exchanges/:exchangeName/currency-pairs', async (req, res) => {
         .json({ success: false, error: 'Exchange not found' });
     }
 
-    const currencyPairs = await CurrencyPair.find(
-      { exchange: exchange._id },
+    const currencyPairs = await CurrencyPair.aggregate([
+      { $match: { exchange: exchange._id } },
       {
-        currencyPair: 1,
-        priceHistory: { $slice: -1 },
-      }
-    );
+        $project: {
+          currencyPair: 1,
+          price: { $arrayElemAt: ['$priceHistory', -1] },
+        },
+      },
+    ]);
 
     res.status(200).json({ success: true, data: currencyPairs });
   } catch (error) {
@@ -132,6 +134,12 @@ app.get('/exchanges/:exchangeName/profile', async (req, res) => {
     const exchange = await Exchange.findOne({
       name: req.params.exchangeName,
     });
+
+    if (!exchange) {
+      return res
+        .status(404)
+        .json({ success: false, error: 'Exchange not found' });
+    }
 
     res.status(200).json({ success: true, data: exchange });
   } catch (error) {
