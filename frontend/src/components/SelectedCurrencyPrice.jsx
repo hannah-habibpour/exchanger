@@ -30,7 +30,7 @@ export default function SelectedCurrencyPrice() {
         <Select defaultValue={selectedCurrency} onChange={handleSelectCurrency}>
           {currencyPairs.map(currencyPair => (
             <Option key={currencyPair.value} value={currencyPair.value}>
-              {currencyPair.name}
+              {`${currencyPair.name} ${currencyPair.logo1} / ${currencyPair.logo2}`}
             </Option>
           ))}
         </Select>

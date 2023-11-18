@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { currencyPairs } from '../constants/currency';
 import '../style.css';
 import { Table, Thead, Tbody, Tr, Th, Td } from './ui/Table';
 
@@ -25,7 +26,13 @@ export default function AvgCurrencyPrices() {
         <Tbody>
           {avgPriceList.map(item => (
             <Tr key={item._id}>
-              <Td>{item.currencyPair}</Td>
+              <Td>
+                {
+                  currencyPairs.find(
+                    currency => currency.value === item.currencyPair
+                  )?.name
+                }
+              </Td>
               <Td>{item.price.sellPrice}</Td>
               <Td>{item.price.buyPrice}</Td>
             </Tr>
