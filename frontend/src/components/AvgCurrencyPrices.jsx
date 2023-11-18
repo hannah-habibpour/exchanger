@@ -27,11 +27,19 @@ export default function AvgCurrencyPrices() {
           {avgPriceList.map(item => (
             <Tr key={item._id}>
               <Td>
-                {
+                {`${
                   currencyPairs.find(
                     currency => currency.value === item.currencyPair
                   )?.name
-                }
+                } ${
+                  currencyPairs.find(
+                    currency => currency.value === item.currencyPair
+                  )?.logo1
+                } / ${
+                  currencyPairs.find(
+                    currency => currency.value === item.currencyPair
+                  )?.logo2
+                }`}
               </Td>
               <Td>{item.price.sellPrice}</Td>
               <Td>{item.price.buyPrice}</Td>
