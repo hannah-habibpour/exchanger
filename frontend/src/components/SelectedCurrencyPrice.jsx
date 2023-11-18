@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { currencyPairs } from '../constants/currency';
+import { currencyPairNames, currencyFlags } from '../constants/currency';
 import '../style.css';
 import { Select, Option } from './ui/Select';
 import { Table, Thead, Tbody, Th, Tr, Td } from './ui/Table';
 
 export default function SelectedCurrencyPrice() {
   const [selectedCurrency, setSelectedCurrency] = useState(
-    currencyPairs[0].value
+    Object.keys(currencyPairNames)[0]
   );
   const [selectedCurrencyPriceList, setSelectedCurrencyPriceList] = useState(
     []
@@ -28,9 +28,12 @@ export default function SelectedCurrencyPrice() {
       <div>Select a Currency pair:</div>
       <div>
         <Select defaultValue={selectedCurrency} onChange={handleSelectCurrency}>
-          {currencyPairs.map(currencyPair => (
-            <Option key={currencyPair.value} value={currencyPair.value}>
-              {`${currencyPair.name} ${currencyPair.logo1} / ${currencyPair.logo2}`}
+          {Object.entries(currencyPairNames).map(([key, value]) => (
+            <Option key={key} value={key}>
+              {`
+              ${value} 
+              ${currencyFlags[key.split('-')[0]]} / 
+              ${currencyFlags[key.split('-')[1]]}`}
             </Option>
           ))}
         </Select>
