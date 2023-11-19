@@ -18,20 +18,20 @@ export default function AllCurrencyPrices({ exchangeName }) {
     <div>
       {selectedCurrencyPriceList ? (
         <div>
-          <Table>
+          <Table style={tableStyle}>
             <Thead>
               <Tr>
-                <Th>Name</Th>
-                <Th>Sell</Th>
-                <Th>Buy</Th>
+                <Th style={thStyle}>Name</Th>
+                <Th style={thStyle}>Sell</Th>
+                <Th style={thStyle}>Buy</Th>
               </Tr>
             </Thead>
             <Tbody>
               {selectedCurrencyPriceList.map(item => (
                 <Tr key={item._id}>
-                  <Td>{item.currencyPair}</Td>
-                  <Td>{item.price.sellPrice}</Td>
-                  <Td>{item.price.buyPrice}</Td>
+                  <Td style={tdStyle}>{item.currencyPair}</Td>
+                  <Td style={tdStyle}>{item.price.sellPrice}</Td>
+                  <Td style={tdStyle}>{item.price.buyPrice}</Td>
                 </Tr>
               ))}
             </Tbody>
@@ -43,3 +43,17 @@ export default function AllCurrencyPrices({ exchangeName }) {
     </div>
   );
 }
+
+const tableStyle = {
+  'border-collapse': 'collapse',
+};
+
+const tdStyle = {
+  border: '1px solid gray',
+  'text-align': 'left',
+};
+
+const thStyle = {
+  border: '1px solid gray',
+  'text-align': 'left',
+};

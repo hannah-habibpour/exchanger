@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { currencyPairNames, currencyFlags } from '../constants/currency';
-import '../style.css';
 import { Select, Option } from './ui/Select';
 import { Table, Thead, Tbody, Th, Tr, Td } from './ui/Table';
 
@@ -37,20 +36,20 @@ export default function SelectedCurrencyPrice() {
             </Option>
           ))}
         </Select>
-        <Table>
+        <Table style={tableStyle}>
           <Thead>
             <Tr>
-              <Th>Exchange</Th>
-              <Th>Sell</Th>
-              <Th>Buy</Th>
+              <Th style={thStyle}>Exchange</Th>
+              <Th style={thStyle}>Sell</Th>
+              <Th style={thStyle}>Buy</Th>
             </Tr>
           </Thead>
           <Tbody>
             {selectedCurrencyPriceList.map(item => (
               <Tr key={item._id}>
-                <Td>{item.exchangeName}</Td>
-                <Td>{item.price.sellPrice}</Td>
-                <Td>{item.price.buyPrice}</Td>
+                <Td style={tdStyle}>{item.exchangeName}</Td>
+                <Td style={tdStyle}>{item.price.sellPrice}</Td>
+                <Td style={tdStyle}>{item.price.buyPrice}</Td>
               </Tr>
             ))}
           </Tbody>
@@ -59,3 +58,17 @@ export default function SelectedCurrencyPrice() {
     </div>
   );
 }
+
+const tableStyle = {
+  'border-collapse': 'collapse',
+};
+
+const tdStyle = {
+  border: '1px solid gray',
+  'text-align': 'left',
+};
+
+const thStyle = {
+  border: '1px solid gray',
+  'text-align': 'left',
+};

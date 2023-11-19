@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { currencyPairNames, currencyFlags } from '../constants/currency';
-import '../style.css';
 import { Table, Thead, Tbody, Tr, Th, Td } from './ui/Table';
 
 export default function AvgCurrencyPrices() {
@@ -15,24 +14,24 @@ export default function AvgCurrencyPrices() {
 
   return (
     <div>
-      <Table className="currencyPrice">
+      <Table style={tableStyle}>
         <Thead>
           <Tr>
-            <Th>Name</Th>
-            <Th>Sell</Th>
-            <Th>Buy</Th>
+            <Th style={thStyle}>Name</Th>
+            <Th style={thStyle}>Sell</Th>
+            <Th style={thStyle}>Buy</Th>
           </Tr>
         </Thead>
         <Tbody>
           {avgPriceList.map(item => (
             <Tr key={item._id}>
-              <Td>
+              <Td style={tdStyle}>
                 {`${currencyPairNames[item.currencyPair]} ${
                   currencyFlags[item.currencyPair.split('-')[0]]
                 } / ${currencyFlags[item.currencyPair.split('-')[1]]}`}
               </Td>
-              <Td>{item.price.sellPrice}</Td>
-              <Td>{item.price.buyPrice}</Td>
+              <Td style={tdStyle}>{item.price.sellPrice}</Td>
+              <Td style={tdStyle}>{item.price.buyPrice}</Td>
             </Tr>
           ))}
         </Tbody>
@@ -40,3 +39,20 @@ export default function AvgCurrencyPrices() {
     </div>
   );
 }
+
+const tableStyle = {
+  'border-collapse': 'collapse',
+  margin: '0 auto',
+  width: '60%',
+  'margin-bottom': '10px',
+};
+
+const tdStyle = {
+  border: '1px solid gray',
+  'text-align': 'left',
+};
+
+const thStyle = {
+  border: '1px solid gray',
+  'text-align': 'left',
+};
