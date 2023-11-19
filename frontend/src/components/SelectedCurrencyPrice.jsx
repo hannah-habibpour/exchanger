@@ -11,17 +11,6 @@ export default function SelectedCurrencyPrice() {
     []
   );
 
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-
-  useEffect(() => {
-    window.addEventListener('resize', () => setWindowWidth(window.innerWidth));
-    return () => {
-      window.removeEventListener('resize', () =>
-        setWindowWidth(window.innerWidth)
-      );
-    };
-  }, []);
-
   useEffect(() => {
     fetch(`/currency-pairs/${selectedCurrency}`)
       .then(res => res.json())
@@ -39,17 +28,17 @@ export default function SelectedCurrencyPrice() {
       : tdStyle;
   };
 
-  const getTableStyle = windowWidth => {
-    return windowWidth > 600 ? tableStyle : tableStyleSM;
-  };
-
   return (
     <div>
-      <div style={{ fontWeight: 'bold', fontSize: '20px' }}>
+      <div style={{ fontWeight: 'bold', fontSize: '20px', marginTop: '20px' }}>
         Select a Currency pair:
       </div>
       <div>
-        <Select defaultValue={selectedCurrency} onChange={handleSelectCurrency}>
+        <Select
+          defaultValue={selectedCurrency}
+          onChange={handleSelectCurrency}
+          style={{ marginTop: '10px' }}
+        >
           {Object.entries(currencyPairNames).map(([key, value]) => (
             <Option key={key} value={key}>
               {`
@@ -59,7 +48,7 @@ export default function SelectedCurrencyPrice() {
             </Option>
           ))}
         </Select>
-        <Table style={getTableStyle(windowWidth)}>
+        <Table style={tableStyle}>
           <Thead>
             <Tr>
               <Th style={thStyle}>Exchange</Th>
@@ -83,20 +72,7 @@ export default function SelectedCurrencyPrice() {
 }
 
 const tableStyle = {
-  width: '60%',
-  maxWidth: '800px',
-  margin: '0 auto',
-  marginBottom: '10px',
-  marginTop: '10px',
-  border: '1px solid gray',
-  borderRadius: '10px',
-  borderSpacing: '0',
-  padding: '10px',
-};
-
-const tableStyleSM = {
-  width: '90%',
-  margin: '0 auto',
+  width: '100%',
   marginBottom: '10px',
   marginTop: '10px',
   border: '1px solid gray',

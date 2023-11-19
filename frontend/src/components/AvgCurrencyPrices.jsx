@@ -5,17 +5,6 @@ import { Table, Thead, Tbody, Tr, Th, Td } from './ui/Table';
 export default function AvgCurrencyPrices() {
   const [avgPriceList, setAvgPriceList] = useState([]);
 
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-
-  useEffect(() => {
-    window.addEventListener('resize', () => setWindowWidth(window.innerWidth));
-    return () => {
-      window.removeEventListener('resize', () =>
-        setWindowWidth(window.innerWidth)
-      );
-    };
-  }, []);
-
   useEffect(() => {
     fetch('/exchanges/avg/currencypairs')
       .then(res => res.json())
@@ -27,13 +16,9 @@ export default function AvgCurrencyPrices() {
     return index === avgPriceList.length - 1 ? lastTdStyle : tdStyle;
   };
 
-  const getTableStyle = windowWidth => {
-    return windowWidth > 600 ? tableStyle : tableStyleSM;
-  };
-
   return (
     <div>
-      <Table style={getTableStyle(windowWidth)}>
+      <Table style={tableStyle}>
         <Thead>
           <Tr>
             <Th style={thStyle}>Name</Th>
@@ -60,20 +45,7 @@ export default function AvgCurrencyPrices() {
 }
 
 const tableStyle = {
-  width: '60%',
-  maxWidth: '800px',
-  margin: '0 auto',
-  marginBottom: '10px',
-  marginTop: '10px',
-  border: '1px solid gray',
-  borderRadius: '10px',
-  borderSpacing: '0',
-  padding: '10px',
-};
-
-const tableStyleSM = {
-  width: '90%',
-  margin: '0 auto',
+  width: '100%',
   marginBottom: '10px',
   marginTop: '10px',
   border: '1px solid gray',
