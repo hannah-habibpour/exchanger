@@ -11,6 +11,17 @@ export default function SelectedCurrencyPrice() {
     []
   );
 
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    window.addEventListener('resize', () => setWindowWidth(window.innerWidth));
+    return () => {
+      window.removeEventListener('resize', () =>
+        setWindowWidth(window.innerWidth)
+      );
+    };
+  }, []);
+
   useEffect(() => {
     fetch(`/currency-pairs/${selectedCurrency}`)
       .then(res => res.json())
@@ -22,9 +33,21 @@ export default function SelectedCurrencyPrice() {
     setSelectedCurrency(e.target.value);
   };
 
+  const getTdStyle = index => {
+    return index === selectedCurrencyPriceList.length - 1
+      ? lastTdStyle
+      : tdStyle;
+  };
+
+  const getTableStyle = windowWidth => {
+    return windowWidth > 600 ? tableStyle : tableStyleSM;
+  };
+
   return (
     <div>
-      <div>Select a Currency pair:</div>
+      <div style={{ fontWeight: 'bold', fontSize: '20px' }}>
+        Select a Currency pair:
+      </div>
       <div>
         <Select defaultValue={selectedCurrency} onChange={handleSelectCurrency}>
           {Object.entries(currencyPairNames).map(([key, value]) => (
@@ -36,7 +59,7 @@ export default function SelectedCurrencyPrice() {
             </Option>
           ))}
         </Select>
-        <Table style={tableStyle}>
+        <Table style={getTableStyle(windowWidth)}>
           <Thead>
             <Tr>
               <Th style={thStyle}>Exchange</Th>
@@ -45,11 +68,11 @@ export default function SelectedCurrencyPrice() {
             </Tr>
           </Thead>
           <Tbody>
-            {selectedCurrencyPriceList.map(item => (
+            {selectedCurrencyPriceList.map((item, index) => (
               <Tr key={item._id}>
-                <Td style={tdStyle}>{item.exchangeName}</Td>
-                <Td style={tdStyle}>{item.price.sellPrice}</Td>
-                <Td style={tdStyle}>{item.price.buyPrice}</Td>
+                <Td style={getTdStyle(index)}>{item.exchangeName}</Td>
+                <Td style={getTdStyle(index)}>{item.price.sellPrice}</Td>
+                <Td style={getTdStyle(index)}>{item.price.buyPrice}</Td>
               </Tr>
             ))}
           </Tbody>
@@ -60,15 +83,40 @@ export default function SelectedCurrencyPrice() {
 }
 
 const tableStyle = {
-  'border-collapse': 'collapse',
+  width: '60%',
+  maxWidth: '800px',
+  margin: '0 auto',
+  marginBottom: '10px',
+  marginTop: '10px',
+  border: '1px solid gray',
+  borderRadius: '10px',
+  borderSpacing: '0',
+  padding: '10px',
 };
 
-const tdStyle = {
+const tableStyleSM = {
+  width: '90%',
+  margin: '0 auto',
+  marginBottom: '10px',
+  marginTop: '10px',
   border: '1px solid gray',
-  'text-align': 'left',
+  borderRadius: '10px',
+  borderSpacing: '0',
+  padding: '10px',
 };
 
 const thStyle = {
-  border: '1px solid gray',
-  'text-align': 'left',
+  borderBottom: '1px solid gray',
+  textAlign: 'left',
+};
+
+const tdStyle = {
+  textAlign: 'left',
+  paddingTop: '10px',
+  borderBottom: '1px solid #a9a9a9',
+};
+
+const lastTdStyle = {
+  textAlign: 'left',
+  paddingTop: '10px',
 };
