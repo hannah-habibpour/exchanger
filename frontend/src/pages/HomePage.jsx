@@ -19,6 +19,14 @@ export default function HomePage() {
 
   return (
     <div className="container" style={getContainerStyle(windowWidth)}>
+      <div style={{ textAlign: 'center' }}>
+        <img
+          src="/logo.png"
+          alt="logo"
+          style={{ width: '100px', height: '100%' }}
+        />
+        <h1>Xchanger</h1>
+      </div>
       <AvgCurrencyPrices />
       <SelectedCurrencyPrice />
     </div>

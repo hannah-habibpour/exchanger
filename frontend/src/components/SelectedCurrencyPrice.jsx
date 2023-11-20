@@ -37,7 +37,7 @@ export default function SelectedCurrencyPrice() {
         <Select
           defaultValue={selectedCurrency}
           onChange={handleSelectCurrency}
-          style={{ marginTop: '10px' }}
+          style={{ marginTop: '10px', padding: '5px' }}
         >
           {Object.entries(currencyPairNames).map(([key, value]) => (
             <Option key={key} value={key}>
