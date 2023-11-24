@@ -24,20 +24,20 @@ export default function SelectedCurrencyPrice() {
 
   const getTdStyle = index => {
     return index === selectedCurrencyPriceList.length - 1
-      ? lastTdStyle
-      : tdStyle;
+      ? style.lastTd
+      : style.td;
   };
 
   return (
     <div>
-      <div style={{ fontWeight: 'bold', fontSize: '20px', marginTop: '20px' }}>
+      <div className="selectTitleContainer" style={style.selectTitleContainer}>
         Select a Currency pair:
       </div>
       <div>
         <Select
           defaultValue={selectedCurrency}
           onChange={handleSelectCurrency}
-          style={{ marginTop: '10px', padding: '5px' }}
+          style={style.select}
         >
           {Object.entries(currencyPairNames).map(([key, value]) => (
             <Option key={key} value={key}>
@@ -48,12 +48,12 @@ export default function SelectedCurrencyPrice() {
             </Option>
           ))}
         </Select>
-        <Table style={tableStyle}>
+        <Table style={style.table}>
           <Thead>
             <Tr>
-              <Th style={thStyle}>Exchange</Th>
-              <Th style={thStyle}>Sell</Th>
-              <Th style={thStyle}>Buy</Th>
+              <Th style={style.th}>Exchange</Th>
+              <Th style={style.th}>Sell</Th>
+              <Th style={style.th}>Buy</Th>
             </Tr>
           </Thead>
           <Tbody>
@@ -71,28 +71,27 @@ export default function SelectedCurrencyPrice() {
   );
 }
 
-const tableStyle = {
-  width: '100%',
-  marginBottom: '10px',
-  marginTop: '10px',
-  border: '1px solid gray',
-  borderRadius: '10px',
-  borderSpacing: '0',
-  padding: '10px',
-};
-
-const thStyle = {
-  borderBottom: '1px solid gray',
-  textAlign: 'left',
-};
-
-const tdStyle = {
-  textAlign: 'left',
-  paddingTop: '10px',
-  borderBottom: '1px solid #a9a9a9',
-};
-
-const lastTdStyle = {
-  textAlign: 'left',
-  paddingTop: '10px',
+const style = {
+  table: {
+    width: '100%',
+    marginBottom: '10px',
+    marginTop: '10px',
+    border: '1px solid gray',
+    borderRadius: '10px',
+    borderSpacing: '0',
+    padding: '10px',
+  },
+  th: { borderBottom: '1px solid gray', textAlign: 'left' },
+  td: {
+    textAlign: 'left',
+    paddingTop: '10px',
+    borderBottom: '1px solid #a9a9a9',
+  },
+  lastTd: { textAlign: 'left', paddingTop: '10px' },
+  selectTitleContainer: {
+    fontWeight: 'bold',
+    fontSize: '20px',
+    marginTop: '20px',
+  },
+  select: { marginTop: '10px', padding: '5px' },
 };

@@ -13,13 +13,16 @@ export default function HomePage() {
     };
   }, []);
 
-  const getContainerStyle = windowWidth => {
-    return windowWidth > 600 ? containerStyle : containerStyleSM;
+  const widthMode = windowWidth => {
+    return windowWidth > 600 ? 'default' : 'sm';
   };
 
   return (
-    <div className="container" style={getContainerStyle(windowWidth)}>
-      <div style={{ textAlign: 'center' }}>
+    <div className="container" style={style.container[widthMode(windowWidth)]}>
+      <div
+        className="logoContainer"
+        style={style.logoContainer[widthMode(windowWidth)]}
+      >
         <img
           src="/logo.png"
           alt="logo"
@@ -33,13 +36,13 @@ export default function HomePage() {
   );
 }
 
-const containerStyle = {
-  width: '60%',
-  maxWidth: '800px',
-  margin: '0 auto',
-};
-
-const containerStyleSM = {
-  width: '90%',
-  margin: '0 auto',
+const style = {
+  container: {
+    default: { width: '60%', maxWidth: '800px', margin: '0 auto' },
+    sm: { width: '90%', margin: '0 auto' },
+  },
+  logoContainer: {
+    default: { textAlign: 'center' },
+    sm: { textAlign: 'center' },
+  },
 };

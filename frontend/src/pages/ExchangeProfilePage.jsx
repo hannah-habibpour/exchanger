@@ -28,12 +28,8 @@ export default function ExchangeProfilePage() {
     };
   }, []);
 
-  const getContainerStyle = windowWidth => {
-    return windowWidth > 600 ? containerStyle : containerStyleSM;
-  };
-
   return (
-    <div style={getContainerStyle(windowWidth)}>
+    <div style={style.container[widthMode(windowWidth)]}>
       {isLoading ? (
         <LoadingPage />
       ) : (
@@ -52,13 +48,13 @@ export default function ExchangeProfilePage() {
   );
 }
 
-const containerStyle = {
-  width: '60%',
-  maxWidth: '800px',
-  margin: '0 auto',
+const widthMode = windowWidth => {
+  return windowWidth > 600 ? 'default' : 'sm';
 };
 
-const containerStyleSM = {
-  width: '90%',
-  margin: '0 auto',
+const style = {
+  container: {
+    default: { width: '60%', maxWidth: '800px', margin: '0 auto' },
+    sm: { width: '90%', margin: '0 auto' },
+  },
 };

@@ -17,20 +17,20 @@ export default function AllCurrencyPrices({ exchangeName }) {
 
   const getTdStyle = index => {
     return index === selectedCurrencyPriceList.length - 1
-      ? lastTdStyle
-      : tdStyle;
+      ? style.lastTd
+      : style.td;
   };
 
   return (
     <div>
       {selectedCurrencyPriceList ? (
         <div>
-          <Table style={tableStyle}>
+          <Table style={style.table}>
             <Thead>
               <Tr>
-                <Th style={thStyle}>Name</Th>
-                <Th style={thStyle}>Sell</Th>
-                <Th style={thStyle}>Buy</Th>
+                <Th style={style.th}>Name</Th>
+                <Th style={style.th}>Sell</Th>
+                <Th style={style.th}>Buy</Th>
               </Tr>
             </Thead>
             <Tbody>
@@ -55,28 +55,21 @@ export default function AllCurrencyPrices({ exchangeName }) {
   );
 }
 
-const tableStyle = {
-  width: '60%',
-  marginBottom: '10px',
-  marginTop: '10px',
-  border: '1px solid gray',
-  borderRadius: '10px',
-  borderSpacing: '0',
-  padding: '10px',
-};
-
-const thStyle = {
-  borderBottom: '1px solid gray',
-  textAlign: 'left',
-};
-
-const tdStyle = {
-  textAlign: 'left',
-  paddingTop: '10px',
-  borderBottom: '1px solid #a9a9a9',
-};
-
-const lastTdStyle = {
-  textAlign: 'left',
-  paddingTop: '10px',
+const style = {
+  table: {
+    width: '100%',
+    marginBottom: '10px',
+    marginTop: '10px',
+    border: '1px solid gray',
+    borderRadius: '10px',
+    borderSpacing: '0',
+    padding: '10px',
+  },
+  th: { borderBottom: '1px solid gray', textAlign: 'left' },
+  td: {
+    textAlign: 'left',
+    paddingTop: '10px',
+    borderBottom: '1px solid #a9a9a9',
+  },
+  lastTd: { textAlign: 'left', paddingTop: '10px' },
 };
