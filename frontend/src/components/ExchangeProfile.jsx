@@ -1,34 +1,21 @@
-import { useEffect, useState } from 'react';
+import { useContext } from 'react';
+import { StyleContext } from '../context/StyleContext';
 
 export default function ExchangeProfile({ profile }) {
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-
-  useEffect(() => {
-    window.addEventListener('resize', () => setWindowWidth(window.innerWidth));
-    return () => {
-      window.removeEventListener('resize', () =>
-        setWindowWidth(window.innerWidth)
-      );
-    };
-  }, []);
+  const { widthMode } = useContext(StyleContext);
 
   return (
-    <div style={style.profileContainer[widthMode(windowWidth)]}>
-      <div
-        className="logoContainer"
-        style={style.logoContainer[widthMode(windowWidth)]}
-      >
+    <div style={style.profileContainer[widthMode]}>
+      <div className="logoContainer" style={style.logoContainer[widthMode]}>
         <img
           src={profile.logo}
           alt="logo"
           className="logoImg"
-          style={style.logoImg[widthMode(windowWidth)]}
+          style={style.logoImg[widthMode]}
         />
       </div>
       <div>
-        <h1 style={style.exchangeName[widthMode(windowWidth)]}>
-          {profile.name}
-        </h1>
+        <h1 style={style.exchangeName[widthMode]}>{profile.name}</h1>
         <p>Address: {profile.address}</p>
         <p>Number: {profile.phone}</p>
         <p>Email: {profile.email}</p>
@@ -36,10 +23,6 @@ export default function ExchangeProfile({ profile }) {
     </div>
   );
 }
-
-const widthMode = windowWidth => {
-  return windowWidth > 600 ? 'default' : 'sm';
-};
 
 const style = {
   profileContainer: {

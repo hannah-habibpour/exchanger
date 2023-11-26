@@ -1,28 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useContext } from 'react';
 import AvgCurrencyPrices from '../components/AvgCurrencyPrices';
 import SelectedCurrencyPrice from '../components/SelectedCurrencyPrice';
+import { StyleContext } from '../context/StyleContext';
 export default function HomePage() {
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-
-  useEffect(() => {
-    window.addEventListener('resize', () => setWindowWidth(window.innerWidth));
-    return () => {
-      window.removeEventListener('resize', () =>
-        setWindowWidth(window.innerWidth)
-      );
-    };
-  }, []);
-
-  const widthMode = windowWidth => {
-    return windowWidth > 600 ? 'default' : 'sm';
-  };
+  const { widthMode } = useContext(StyleContext);
 
   return (
-    <div className="container" style={style.container[widthMode(windowWidth)]}>
-      <div
-        className="logoContainer"
-        style={style.logoContainer[widthMode(windowWidth)]}
-      >
+    <div className="container" style={style.container[widthMode]}>
+      <div className="logoContainer" style={style.logoContainer[widthMode]}>
         <img
           src="/logo.png"
           alt="logo"

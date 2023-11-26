@@ -1,15 +1,16 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import ExchangeProfile from '../components/ExchangeProfile';
 import AllCurrencyPrices from '../components/AllCurrencyPrices';
 import ExchangeNotFound from '../components/ExchangeNotFound';
 import LoadingPage from '../components/ui/LoadingPage';
+import { StyleContext } from '../context/StyleContext';
 
 export default function ExchangeProfilePage() {
   const { exchangeName } = useParams();
   const [isLoading, setIsLoading] = useState(true);
   const [exchangeProfile, setExchangeProfile] = useState();
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const { widthMode } = useContext(StyleContext);
 
   useEffect(() => {
     fetch(`/exchanges/${exchangeName}/profile`)
@@ -19,17 +20,8 @@ export default function ExchangeProfilePage() {
       .finally(() => setIsLoading(false));
   }, [exchangeName]);
 
-  useEffect(() => {
-    window.addEventListener('resize', () => setWindowWidth(window.innerWidth));
-    return () => {
-      window.removeEventListener('resize', () =>
-        setWindowWidth(window.innerWidth)
-      );
-    };
-  }, []);
-
   return (
-    <div style={style.container[widthMode(windowWidth)]}>
+    <div style={style.container[widthMode]}>
       {isLoading ? (
         <LoadingPage />
       ) : (
@@ -47,10 +39,6 @@ export default function ExchangeProfilePage() {
     </div>
   );
 }
-
-const widthMode = windowWidth => {
-  return windowWidth > 600 ? 'default' : 'sm';
-};
 
 const style = {
   container: {
