@@ -1,16 +1,16 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import ExchangeProfile from '../components/ExchangeProfile';
 import AllCurrencyPrices from '../components/AllCurrencyPrices';
 import ExchangeNotFound from '../components/ExchangeNotFound';
 import LoadingPage from '../components/ui/LoadingPage';
-import { StyleContext } from '../context/StyleContext';
+import useStyleContext from '../context/useStyleContext';
 
 export default function ExchangeProfilePage() {
   const { exchangeName } = useParams();
   const [isLoading, setIsLoading] = useState(true);
   const [exchangeProfile, setExchangeProfile] = useState();
-  const { widthMode } = useContext(StyleContext);
+  const { widthMode } = useStyleContext();
 
   useEffect(() => {
     fetch(`/exchanges/${exchangeName}/profile`)

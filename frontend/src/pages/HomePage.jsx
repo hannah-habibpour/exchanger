@@ -1,9 +1,8 @@
-import { useContext } from 'react';
 import AvgCurrencyPrices from '../components/AvgCurrencyPrices';
 import SelectedCurrencyPrice from '../components/SelectedCurrencyPrice';
-import { StyleContext } from '../context/StyleContext';
+import useStyleContext from '../context/useStyleContext';
 export default function HomePage() {
-  const { widthMode } = useContext(StyleContext);
+  const { widthMode } = useStyleContext();
 
   return (
     <div className="container" style={style.container[widthMode]}>
