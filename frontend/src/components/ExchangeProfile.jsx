@@ -1,9 +1,7 @@
-import { useContext } from 'react';
-import { StyleContext } from '../context/StyleContext';
+import useStyleContext from '../context/useStyleContext';
 
 export default function ExchangeProfile({ profile }) {
-  const { widthMode } = useContext(StyleContext);
-
+  const { widthMode } = useStyleContext();
   return (
     <div style={style.profileContainer[widthMode]}>
       <div className="logoContainer" style={style.logoContainer[widthMode]}>
