@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { Table, Thead, Tbody, Tr, Th, Td } from './ui/Table';
 import NoCurrencyFound from './NoCurrencyFound';
 import { currencyPairNames, currencyFlags } from '../constants/currency';
-
-export default function AllCurrencyPrices({ exchangeName }) {
+import { FiEdit } from 'react-icons/fi';
+export default function AllCurrencyPrices({ exchangeName, isAdmin }) {
   const [selectedCurrencyPriceList, setSelectedCurrencyPriceList] = useState(
     []
   );
@@ -15,10 +15,8 @@ export default function AllCurrencyPrices({ exchangeName }) {
       .catch(error => console.log(error));
   }, [exchangeName]);
 
-  const getTdStyle = index => {
-    return index === selectedCurrencyPriceList.length - 1
-      ? style.lastTd
-      : style.td;
+  const isLastRow = index => {
+    return selectedCurrencyPriceList.length - 1 === index;
   };
 
   return (
@@ -31,19 +29,17 @@ export default function AllCurrencyPrices({ exchangeName }) {
                 <Th style={style.th}>Name</Th>
                 <Th style={style.th}>Sell</Th>
                 <Th style={style.th}>Buy</Th>
+                {isAdmin && <Th style={style.th}></Th>}
               </Tr>
             </Thead>
             <Tbody>
-              {selectedCurrencyPriceList.map((item, index) => (
-                <Tr key={item._id}>
-                  <Td style={getTdStyle(index)}>
-                    {`${currencyPairNames[item.currencyPair]} 
-                    ${currencyFlags[item.currencyPair.split('-')[0]]} / 
-                  ${currencyFlags[item.currencyPair.split('-')[1]]}`}
-                  </Td>
-                  <Td style={getTdStyle(index)}>{item.price.sellPrice}</Td>
-                  <Td style={getTdStyle(index)}>{item.price.buyPrice}</Td>
-                </Tr>
+              {selectedCurrencyPriceList.map((currencyPair, index) => (
+                <CurrencyPriceTableRow
+                  key={index}
+                  currencyPair={currencyPair}
+                  isLastRow={isLastRow(index)}
+                  isAdmin={isAdmin}
+                />
               ))}
             </Tbody>
           </Table>
@@ -52,6 +48,29 @@ export default function AllCurrencyPrices({ exchangeName }) {
         <NoCurrencyFound />
       )}
     </div>
+  );
+}
+
+function CurrencyPriceTableRow({ currencyPair, isLastRow, isAdmin }) {
+  const getTdStyle = isLastRow => {
+    return isLastRow ? style.lastTd : style.td;
+  };
+
+  return (
+    <Tr key={currencyPair._id}>
+      <Td style={getTdStyle(isLastRow)}>
+        {`${currencyPairNames[currencyPair.currencyPair]} 
+        ${currencyFlags[currencyPair.currencyPair.split('-')[0]]} / 
+      ${currencyFlags[currencyPair.currencyPair.split('-')[1]]}`}
+      </Td>
+      <Td style={getTdStyle(isLastRow)}>{currencyPair.price.sellPrice}</Td>
+      <Td style={getTdStyle(isLastRow)}>{currencyPair.price.buyPrice}</Td>
+      {isAdmin && (
+        <Td style={getTdStyle(isLastRow)}>
+          <FiEdit />
+        </Td>
+      )}
+    </Tr>
   );
 }
 

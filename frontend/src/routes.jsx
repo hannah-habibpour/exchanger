@@ -3,6 +3,8 @@ import HomePage from './pages/HomePage';
 import ExchangeProfilePage from './pages/ExchangeProfilePage';
 import App from './App';
 import PageNotFound from './components/PageNotFound';
+import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
 
 const Router = createBrowserRouter([
   {
@@ -16,6 +18,14 @@ const Router = createBrowserRouter([
       {
         path: 'profile/:exchangeName',
         element: <ExchangeProfilePage />,
+      },
+      {
+        path: 'login',
+        element: <LoginPage />,
+      },
+      {
+        path: 'register',
+        element: <RegisterPage />,
       },
     ],
   },

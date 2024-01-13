@@ -10,12 +10,16 @@ export default function ExchangeProfilePage() {
   const { exchangeName } = useParams();
   const [isLoading, setIsLoading] = useState(true);
   const [exchangeProfile, setExchangeProfile] = useState();
+  const [isAdmin, setIsAdmin] = useState(false);
   const { widthMode } = useStyleContext();
 
   useEffect(() => {
     fetch(`/exchanges/${exchangeName}/profile`)
       .then(res => res.json())
-      .then(data => setExchangeProfile(data.data))
+      .then(data => {
+        setExchangeProfile(data.data.exchange);
+        setIsAdmin(data.data.isAdmin);
+      })
       .catch(error => console.log(error))
       .finally(() => setIsLoading(false));
   }, [exchangeName]);
@@ -28,8 +32,11 @@ export default function ExchangeProfilePage() {
         <div>
           {exchangeProfile ? (
             <div>
-              <ExchangeProfile profile={exchangeProfile} />
-              <AllCurrencyPrices exchangeName={exchangeProfile.name} />
+              <ExchangeProfile profile={exchangeProfile} isAdmin={isAdmin} />
+              <AllCurrencyPrices
+                exchangeName={exchangeProfile.name}
+                isAdmin={isAdmin}
+              />
             </div>
           ) : (
             <ExchangeNotFound />

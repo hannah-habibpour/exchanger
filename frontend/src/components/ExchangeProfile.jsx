@@ -1,6 +1,7 @@
 import useStyleContext from '../context/useStyleContext';
+import { FiEdit } from 'react-icons/fi';
 
-export default function ExchangeProfile({ profile }) {
+export default function ExchangeProfile({ profile, isAdmin }) {
   const { widthMode } = useStyleContext();
   return (
     <div style={style.profileContainer[widthMode]}>
@@ -18,6 +19,11 @@ export default function ExchangeProfile({ profile }) {
         <p>Number: {profile.phone}</p>
         <p>Email: {profile.email}</p>
       </div>
+      {isAdmin && (
+        <div>
+          <FiEdit />
+        </div>
+      )}
     </div>
   );
 }
