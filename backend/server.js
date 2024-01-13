@@ -131,6 +131,7 @@ app.get('/exchanges/avg/currencypairs', async (req, res) => {
 // @access 	Public
 app.get('/exchanges/:exchangeName/profile', async (req, res) => {
   try {
+    const token = req.cookies.access_token;
     const exchange = await Exchange.findOne({
       name: req.params.exchangeName,
     });
@@ -141,7 +142,15 @@ app.get('/exchanges/:exchangeName/profile', async (req, res) => {
         .json({ success: false, error: 'Exchange not found' });
     }
 
-    res.status(200).json({ success: true, data: exchange });
+    if (!token) {
+      res
+        .status(200)
+        .json({ success: true, data: { exchange: exchange, isAdmin: false } });
+    } else {
+      res
+        .status(200)
+        .json({ success: true, data: { exchange: exchange, isAdmin: true } });
+    }
   } catch (error) {
     res.status(500).json({ error: 'Server error' });
   }
@@ -296,6 +305,7 @@ app.post('/api/v1/auth/login', async (req, res) => {
     // Set JWT as a cookie
     res.cookie('access_token', accessToken, {
       httpOnly: true,
+      maxAge: 60 * 1000,
     });
 
     res.status(200).json({ success: true, data: 'Login successful' });
