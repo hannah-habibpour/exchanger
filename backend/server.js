@@ -305,7 +305,7 @@ app.post('/api/v1/auth/login', async (req, res) => {
     // Set JWT as a cookie
     res.cookie('access_token', accessToken, {
       httpOnly: true,
-      maxAge: 60 * 1000,
+      maxAge: 10 * 60 * 1000,
     });
 
     res.status(200).json({ success: true, data: 'Login successful' });
@@ -317,7 +317,7 @@ app.post('/api/v1/auth/login', async (req, res) => {
 // Generate access token
 function generateAccessToken(exchange) {
   return jwt.sign(exchange, process.env.ACCESS_TOKEN_SECRET, {
-    expiresIn: '1m',
+    expiresIn: '10m',
   });
 }
 
