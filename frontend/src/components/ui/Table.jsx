@@ -38,9 +38,9 @@ export function Th({ children, className, style }) {
   );
 }
 
-export function Td({ children, className, style }) {
+export function Td({ children, className, style, testId }) {
   return (
-    <td className={`${className}`} style={style}>
+    <td className={`${className}`} style={style} data-testid={testId}>
       {children}
     </td>
   );

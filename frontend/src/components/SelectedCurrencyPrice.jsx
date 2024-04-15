@@ -30,7 +30,11 @@ export default function SelectedCurrencyPrice() {
 
   return (
     <div>
-      <div className="selectTitleContainer" style={style.selectTitleContainer}>
+      <div
+        className="selectTitleContainer"
+        data-testid="select-currency"
+        style={style.selectTitleContainer}
+      >
         Select a Currency pair:
       </div>
       <div>
@@ -59,7 +63,12 @@ export default function SelectedCurrencyPrice() {
           <Tbody>
             {selectedCurrencyPriceList.map((item, index) => (
               <Tr key={item._id}>
-                <Td style={getTdStyle(index)}>{item.exchangeName}</Td>
+                <Td
+                  style={getTdStyle(index)}
+                  data-testid={`exchangeName-${item._id}`}
+                >
+                  {item.exchangeName}
+                </Td>
                 <Td style={getTdStyle(index)}>{item.price.sellPrice}</Td>
                 <Td style={getTdStyle(index)}>{item.price.buyPrice}</Td>
               </Tr>
